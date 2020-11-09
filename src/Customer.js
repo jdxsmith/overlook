@@ -17,7 +17,7 @@ class Customer {
 
     confirmCustomerLogin(enteredPassword) {
         if (enteredPassword === this.password) {
-            return 'valid credentials';
+            return 'Welcome customer!';
         } else {
             return 'Incorrect username or password. Please try again.';
         }
