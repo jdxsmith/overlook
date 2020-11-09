@@ -1,7 +1,7 @@
 import chai from 'chai';
 const expect = chai.expect;
 import Customer from '../src/Customer';
-// import Hotel from '../src/Hotel';
+import Hotel from '../src/Hotel';
 
 describe('Customer', () => {
     let customer1;
@@ -73,4 +73,6 @@ describe('Customer', () => {
 
         allBookings = [booking1, booking2, booking3, booking4];
     })
+
+    
 })
