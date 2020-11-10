@@ -53,4 +53,4 @@ class Manager {
     }
 }
 
-export { Manager }
+export default Manager
