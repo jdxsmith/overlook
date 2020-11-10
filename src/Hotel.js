@@ -26,4 +26,4 @@ class Hotel {
     }
 }
 
-export { Hotel }
+export default Hotel

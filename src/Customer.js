@@ -8,7 +8,7 @@ class Customer {
         } else {
             this.id = 0
         };
-        this.date = new Date().toDateString();
+        this.date = new Date().toISOString().split('T')[0];
         this.amountSpent = 0;
         this.presentBookings = [];
         this.futureBookings = [];
@@ -16,7 +16,7 @@ class Customer {
     }
 
     confirmCustomerLogin(enteredPassword) {
-        if (enteredPassword === this.password) {
+        if (enteredPassword === this.password && this.username.includes('customer')) {
             return 'Welcome customer!';
         } else {
             return 'Incorrect username or password. Please try again.';
@@ -54,4 +54,4 @@ class Customer {
     }
 }
 
-export { Customer }
+export default Customer
