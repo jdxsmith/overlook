@@ -13,4 +13,10 @@ export let apiData = {
           .catch(error => console.log(error.message));
       },
   
+      fetchBookingData() {
+          return fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings')
+            .then(response => response.json())
+            .then(data => data.bookings)
+            .catch(error => console.log(error.message));
+      },
 }
