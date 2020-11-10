@@ -87,6 +87,7 @@ function displayCustomerPage() {
     const pageHeader = `<h1 class="main-title">Your Bookings</h1>`;
     navBar.insertAdjacentHTML('afterbegin', customerNav);
     mainPage.insertAdjacentHTML('afterbegin', pageHeader);
+    displayAllBookings(currentCustomer);
 }
 
 function createManager(enteredUsername, enteredPassword) {
@@ -148,4 +149,38 @@ function clearUserLoginError() {
 function clearLoginInputs(usernameInput, passwordInput) {
     usernameInput.value = "";
     passwordInput.value = "";
+}
+
+function displayBookingsByType(bookingType, bookings, customerInfo) {
+    const roomHistory = mainPage.lastChild.children[1];
+    const bookingHTML =
+      `<article class="booking-cards">
+        <h2>${bookingType}</h2>
+        <ul class="room-history">
+        </ul>
+      </article>`;
+    mainPage.insertAdjacentHTML('beforeend', bookingHTML);
+    displayListOfBookings(bookings, customerInfo);
+}
+
+function displayAllBookings(customerInfo) {
+    const roomHistory = mainPage.lastChild.children[1];
+    if (customerInfo.presentBookings.length > 0) {
+      displayBookingsByType('Current Bookings', customerInfo.presentBookings, customerInfo);
+    }
+    if (customerInfo.futureBookings.length > 0) {
+      displayBookingsByType('Future Bookings', customerInfo.futureBookings, customerInfo);
+    }
+    if (customerInfo.pastBookings.length > 0) {
+      displayBookingsByType('Past Bookings', customerInfo.pastBookings, customerInfo);
+    }
+}
+
+function displayListOfBookings(bookings) {
+    const roomHistory = mainPage.lastChild.children[1];
+    bookings.forEach(booking => {
+      const bookingItem =
+      `<li>Room ${booking.roomNumber} on ${booking.date}</li>`;
+      roomHistory.insertAdjacentHTML('beforeend', bookingItem);
+    })
 }
