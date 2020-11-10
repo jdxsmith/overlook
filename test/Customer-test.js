@@ -37,8 +37,6 @@ describe('Customer', () => {
             costPerNight: 200
         };
 
-        hotel = new Hotel([room1, room2]);
-
         booking1 = {
             id: "befg783hd7e28fhi3e",
             userID: 21,
@@ -71,8 +69,66 @@ describe('Customer', () => {
             roomServiceCharges: []
         };
 
+        hotel = new Hotel([room1, room2]);
+
         allBookings = [booking1, booking2, booking3, booking4];
     })
 
-    
+    it('should be a function', () => {
+        expect(Customer).to.be.a('function');
+    })
+
+    it('should have a name', () => {
+        expect(customer1.name).to.equal("Benjamin Ten");
+    })
+
+    it('should have a password', () => {
+        expect(customer1.password).to.equal("overlook2020");
+    })
+
+    it('should have an id', () => {
+        expect(customer2.id).to.equal(21);
+    })
+
+    it('should have a date', () => {
+        expect(customer1.date).to.equal(new Date().toISOString().split('T')[0]);
+    })
+
+    it('should welcome the customer upon successful login', () => {
+        expect(customer1.confirmCustomerLogin('overlook2020')).to.equal('Welcome customer!');
+    })
+
+    it('should invalidate the customer upon unsuccessful login', () => {
+        expect(customer1.confirmCustomerLogin('notoverlook2020')).to.equal('Incorrect username or password. Please try again.');
+    })
+
+    it('should start with no present bookings', () => {
+        expect(customer1.presentBookings).to.deep.equal([]);
+    })
+
+    it('should start with no past bookings', () => {
+        expect(customer1.pastBookings).to.deep.equal([]);
+    })
+
+    it('should start with no future bookings', () => {
+        expect(customer1.futureBookings).to.deep.equal([]);
+    })
+
+    it('should start with an amount spent of 0', () => {
+        expect(customer1.amountSpent).to.equal(0);
+    })
+
+    it('should be able to calculate amount spent for a customer', () => {
+        customer1.calculateAmountSpent(hotel, allBookings);
+
+        expect(customer1.amountSpent).to.equal(600);
+    })
+
+    it('should sort a customers booking history', () => {
+        customer2.sortCustomerBookings(allBookings);
+
+        expect(customer2.presentBookings).to.deep.equal([]);
+        expect(customer2.pastBookings).to.deep.equal([booking3]);
+        expect(customer2.futureBookings).to.deep.equal([booking1]);
+    })
 })
