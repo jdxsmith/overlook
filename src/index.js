@@ -42,6 +42,8 @@ function handleUserLogin(event) {
     } else if (event.target.className === 'login-btn' && usernameInput.value.includes('manager')) {
         createManager(usernameInput.value, passwordInput.value);
         clearLoginInputs(usernameInput, passwordInput);
+    } else if (event.target.className === 'login-btn') {
+        displayUserLoginError();
     }
 }
 
@@ -56,8 +58,6 @@ function createCustomer(enteredUsername, enteredPassword) {
     if (validateCustomer === 'Welcome customer!') {
         runCustomerMethods();
         displayCustomerPage();
-    } else {
-        displayUserLoginError();
     }
 }
 
