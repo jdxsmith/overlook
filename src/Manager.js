@@ -1,14 +1,15 @@
-const { Customer } = require("./Customer");
+import Customer from '../src/Customer';
 
 class Manager {
     constructor(username) {
         this.username = username;
+        this.id = 0;
         this.password = 'overlook2020';
-        this.date = new Date().toDateString();
+        this.date = new Date().toISOString().split('T')[0];
     }
 
     confirmManagerLogin(enteredPassword) {
-        if (enteredPassword === this.password) {
+        if (enteredPassword === this.password && this.username.includes('manager')) {
             return 'Welcome manager!';
         } else {
             return 'Incorrect username or password. Please try again.';
