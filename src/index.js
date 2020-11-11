@@ -268,11 +268,11 @@ function displayOpenRooms(availableRooms) {
 }
 
 function handleMainPageActions(event) {
-    const nameEntered = event.target.previousElementSibling;
+    const specifiedName = event.target.previousElementSibling;
     if (event.target.className === 'room-types-btn') {
       filterRooms(event);
     } else if (event.target.className === 'book-available-room-btn') {
-      bookRoom(event, nameEntered, currentGuest);
+      bookRoom(event, specifiedName, currentCustomer);
     }
 }
 
@@ -297,4 +297,41 @@ function displayFilteredRoomsList(roomType, filteredRooms) {
 function displayApologyMessage() {
     const messageHTML = `<h3 class="apology-message">Sorry, but there are no available rooms on ${currentHotel.date}. Please select a different date.</h3>`;
     mainPage.insertAdjacentHTML('beforeend', messageHTML);
+}
+
+function bookRoom(event, specifiedName, customerInfo) {
+    const selectedRoom = event.target.parentNode.children[0].innerText;
+    processRoomBooking(selectedRoom, customerInfo, event);
+    specifiedName.value = '';
+}
+
+function processRoomBooking(selectedRoom, customerInfo, event) {
+    const bookingObject = formatBooking(selectedRoom.slice(5), customerInfo.id, currentHotel.date);
+    const createdBooking = apiData.postBooking(bookingObject);
+    createdBooking
+      .then(() => displayBookingMessage(event, selectedRoom, currentHotel.date))
+      .then(() => fetchNewBooking(createdBooking));
+}
+
+function formatBooking(roomNumber, customerID, selectedDate) {
+    return {
+      userID: customerID,
+      date: selectedDate,
+      roomNumber: parseInt(roomNumber)
+    }
+}
+
+function displayBookingMessage(event, selectedRoom, selectedDate) {
+    const postBookingBtn = event.target;
+    const bookingMessage = `<p class="successful-booking">You've successfully booked ${selectedRoom} for ${selectedDate}!</p>`;
+    postBookingBtn.insertAdjacentHTML('afterend', bookingMessage);
+}
+
+function fetchNewBooking(newBooking) {
+    newBooking
+      .then(() => apiData.fetchBookingData())
+      .then(response => bookingData = response)
+      .then(() => runCustomerMethods())
+      .then(() => displayCustomerPage())
+      .catch(error => console.log(error.message));
 }
