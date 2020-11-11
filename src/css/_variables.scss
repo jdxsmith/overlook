@@ -2,12 +2,20 @@ $dark-sky-blue: #557A95;
 $light-sky-blue: #7395AE;
 $light-gray-brown: #B1A296;
 $dark-gray-brown: #5D5C61;
+$maroon: #800000;
 
 @mixin flex-column {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+@mixin flex-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
 
 @mixin input-fields {
