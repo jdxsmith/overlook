@@ -45,7 +45,17 @@ This project's goal was to build a hotel webiste that allows customers and manag
 
 ## Working Application
 
+### Login Page
 
+![Screen Shot 2020-11-11 at 9 02 26 AM](https://user-images.githubusercontent.com/67242223/98834864-effd0780-23fc-11eb-9278-3edd8ee3c422.png)
+
+### Customer Page
+
+![Screen Shot 2020-11-11 at 9 06 48 AM](https://user-images.githubusercontent.com/67242223/98835125-423e2880-23fd-11eb-9f0f-eede13caaadc.png)
+
+### Manager Page
+
+![Screen Shot 2020-11-11 at 9 07 49 AM](https://user-images.githubusercontent.com/67242223/98835239-67329b80-23fd-11eb-8a1e-4c417b84e8ad.png)
 
 ## Learning Goals
 
