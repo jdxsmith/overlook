@@ -17,6 +17,8 @@ const userLoginForm = document.querySelector('.user-login-form');
 
 window.addEventListener('load', getAllData);
 userLoginForm.addEventListener('click', handleUserLogin);
+navBar.addEventListener('click', handleNavActions);
+// mainPage.addEventListener('click', handleMainPageActions);
 
 function instantiateAllData(users, rooms, bookings) {
     userData = users;
@@ -123,6 +125,18 @@ function displayManagerPage(todaysIncome, todaysOccupancy, availableRooms) {
                 <h3 class="manager-nav-bar-stats">Available Rooms: ${availableRooms.length}</h3>
             </div>
         </div>
+        <div class="manager-nav-buttons">
+            <article class="manager-customer-search">
+                <h4 class="manager-nav-buttons-title">Search For Customers</h4>
+                <input type="text" placeholder="Customer Name" aria-label="customer-name-input" class="manager-nav-input">
+                <button class="manager-nav-btn search-customer-btn">Search Customer</button>
+            </article>
+            <article class="manager-date-form">
+                <h4 class="manager-nav-buttons-title">Check Room Availability</h4>
+                <input type="date" aria-label="date-input" class="manager-nav-input">
+                <button class="manager-nav-btn date-availability-btn">Check Rooms</button>
+            </article>
+        </div>
     </section>`;
     const pageHeader = `<h1 class="main-title">Current Guests</h1>`;
     navBar.insertAdjacentHTML('afterbegin', managerNav);
@@ -152,7 +166,6 @@ function clearLoginInputs(usernameInput, passwordInput) {
 }
 
 function displayBookingsByType(bookingType, bookings, customerInfo) {
-    const roomHistory = mainPage.lastChild.children[1];
     const bookingHTML =
       `<article class="booking-cards">
         <h2>${bookingType}</h2>
@@ -164,7 +177,6 @@ function displayBookingsByType(bookingType, bookings, customerInfo) {
 }
 
 function displayAllBookings(customerInfo) {
-    const roomHistory = mainPage.lastChild.children[1];
     if (customerInfo.presentBookings.length > 0) {
       displayBookingsByType('Current Bookings', customerInfo.presentBookings, customerInfo);
     }
@@ -184,3 +196,70 @@ function displayListOfBookings(bookings) {
       roomHistory.insertAdjacentHTML('beforeend', bookingItem);
     })
 }
+
+function handleNavActions(event) {
+    if (event.target.classList.contains('room-availability-btn')) {
+        displayAvailableRooms(event, currentCustomer.id);
+    } else if (event.target.classList.contains('search-user-button')) {
+        findGuestProfile(event);
+    }
+}
+  
+function displayAvailableRooms(event, customerID) {
+    const dateInput = event.target.previousElementSibling;
+    if (currentCustomer.date <= dateInput.value) {
+      displayFilteredRooms(dateInput, event, customerID);
+    }
+}
+
+function displayFilteredRooms(dateInput, event, customerID) {
+    mainPage.innerHTML = '';
+    const pageHeader = `<h1 class="main-title">Available Rooms on ${dateInput.value}</h1>`;
+    mainPage.insertAdjacentHTML('afterbegin', pageHeader);
+    displayRoomsForm(customerID);
+    findOpenRooms(dateInput.value, customerID);
+}
+
+function displayRoomsForm(customerID) {
+    const roomsForm =
+    `<section class="rooms-form">
+        <h2 class="rooms-form-title">Filter Rooms By Type</h2>
+        <div class="rooms-form-inputs">
+            <select name="room-types" id="room-types" class="room-type-options">
+                <option value="single room">single room</option>
+                <option value="junior suite">junior suite</option>
+                <option value="suite">suite</option>
+                <option value="residential suite">residential suite</option>
+                <option value="all rooms">all rooms</option>
+            </select>
+            <button class="room-type-button">FILTER YOUR SEARCH</button>
+        </div>
+    </section>`;
+    if (customerID !== 0) {
+      mainPage.insertAdjacentHTML('beforeend', roomsForm);
+    }
+}
+
+function findOpenRooms(selectedDate) {
+    currentHotel.date = selectedDate.replace('-', '/').replace('-', '/');
+    const availableRooms = currentHotel.getAvailableRooms(bookingData);
+    displayOpenRooms(availableRooms);
+}
+
+function displayOpenRooms(availableRooms) {
+    availableRooms.forEach(room => {
+      const roomHTML =
+      `<section class="available-room-cards">
+        <h2 class="available-room-card-header">Room ${room.number}</h2>
+        <ul class="available-room-list">
+          <li class="available-room-list-item"><h3>${room.roomType}</h3></li>
+          <li class="available-room-list-item">${room.numBeds} ${room.bedSize} size beds</li>
+          <li class="available-room-list-item">Cost Per Night: $${room.costPerNight}</li>
+          <li class="available-room-list-item">Bidet: ${room.bidet}</li>
+        </ul>
+        <button class="book-available-room-btn">Book Room</button>
+      </section>`;
+      mainPage.insertAdjacentHTML('beforeend', roomHTML);
+    })
+}
+  
