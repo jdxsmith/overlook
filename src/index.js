@@ -18,7 +18,7 @@ const userLoginForm = document.querySelector('.user-login-form');
 window.addEventListener('load', getAllData);
 userLoginForm.addEventListener('click', handleUserLogin);
 navBar.addEventListener('click', handleNavActions);
-// mainPage.addEventListener('click', handleMainPageActions);
+mainPage.addEventListener('click', handleMainPageActions);
 
 function instantiateAllData(users, rooms, bookings) {
     userData = users;
@@ -212,7 +212,7 @@ function displayAvailableRooms(event, customerID) {
     }
 }
 
-function displayFilteredRooms(dateInput, event, customerID) {
+function displayFilteredRooms(dateInput, customerID) {
     mainPage.innerHTML = '';
     const pageHeader = `<h1 class="main-title">Available Rooms on ${dateInput.value}</h1>`;
     mainPage.insertAdjacentHTML('afterbegin', pageHeader);
@@ -232,7 +232,7 @@ function displayRoomsForm(customerID) {
                 <option value="residential suite">residential suite</option>
                 <option value="all rooms">all rooms</option>
             </select>
-            <button class="room-type-button">FILTER YOUR SEARCH</button>
+            <button class="room-types-btn">Filter Rooms</button>
         </div>
     </section>`;
     if (customerID !== 0) {
@@ -243,7 +243,11 @@ function displayRoomsForm(customerID) {
 function findOpenRooms(selectedDate) {
     currentHotel.date = selectedDate.replace('-', '/').replace('-', '/');
     const availableRooms = currentHotel.getAvailableRooms(bookingData);
-    displayOpenRooms(availableRooms);
+    if (availableRooms.length > 0) {
+        displayOpenRooms(availableRooms);
+    } else {
+        displayApologyMessage();
+    }  
 }
 
 function displayOpenRooms(availableRooms) {
@@ -262,4 +266,35 @@ function displayOpenRooms(availableRooms) {
       mainPage.insertAdjacentHTML('beforeend', roomHTML);
     })
 }
-  
+
+function handleMainPageActions(event) {
+    const nameEntered = event.target.previousElementSibling;
+    if (event.target.className === 'room-types-btn') {
+      filterRooms(event);
+    } else if (event.target.className === 'book-available-room-btn') {
+      bookRoom(event, nameEntered, currentGuest);
+    }
+}
+
+function filterRooms(event) {
+    const roomType = event.target.previousElementSibling;
+    const filteredRooms = currentHotel.filterAvailableRoomsByType(bookingData, roomType.value);
+    mainPage.innerHTML = '';
+    if (filteredRooms.length > 0) {
+        displayFilteredRoomsList(roomType.value, filteredRooms);
+    } else {
+        displayApologyMessage();
+    }
+}
+
+function displayFilteredRoomsList(roomType, filteredRooms) {
+    const pageHeader = `<h1 class="main-title">${roomType}s available on ${currentHotel.date}</h1>`;
+    mainPage.insertAdjacentHTML('afterbegin', pageHeader);
+    displayRoomsForm(currentCustomer.id);
+    displayOpenRooms(filteredRooms);
+}
+
+function displayApologyMessage() {
+    const messageHTML = `<h3 class="apology-message">Sorry, but there are no available rooms on ${currentHotel.date}. Please select a different date.</h3>`;
+    mainPage.insertAdjacentHTML('beforeend', messageHTML);
+}
