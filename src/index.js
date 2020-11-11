@@ -73,7 +73,7 @@ function displayCustomerPage() {
     const customerNav =
     `<section class='customer-nav-bar'>
         <div class='customer-nav-bar-heading'>
-            <h2 class='nav-text'>Welcome back, ${currentCustomer.name}</h2>
+            <h2 class='welcome-back'>Welcome back, ${currentCustomer.name}</h2>
         </div>
         <div class='nav-bar-details'>
             <article class='nav-customer-booking'>
@@ -168,7 +168,7 @@ function clearLoginInputs(usernameInput, passwordInput) {
 function displayBookingsByType(bookingType, bookings, customerInfo) {
     const bookingHTML =
       `<article class="booking-cards">
-        <h2>${bookingType}</h2>
+        <h2 class='booking-types'>${bookingType}</h2>
         <ul class="room-history">
         </ul>
       </article>`;

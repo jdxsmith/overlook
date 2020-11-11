@@ -13,13 +13,17 @@ body {
 nav {
   @include flex-column;
   background-color: $light-sky-blue;
-  height: 15vh;
+  height: 30%;
 }
 
 h1 {
-  margin: 0;
-  color: $dark-gray-brown;
+  margin: 10px;
+  color: $maroon;
   font-size: 300%;
+}
+
+.main-title {
+  margin-top: 20px;
 }
 
 h2 {
@@ -57,4 +61,33 @@ main {
   height: 15%;
   border-radius: 2em;
   outline: none;
+}
+
+.customer-nav-bar {
+  @include flex-row;
+  color: $maroon;
+}
+
+.manager-nav-bar {
+  @include flex-row;
+  color: $maroon;
+}
+
+.welcome-back {
+  color: $maroon;
+  margin-right: 50px;
+}
+
+.booking-types {
+  color: $light-gray-brown;
+}
+
+.room-history {
+  list-style: none;
+  margin-left: -32px;
+}
+
+.available-room-list {
+  list-style: none;
+  margin-left: -32px;
 }
