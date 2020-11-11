@@ -1,17 +1,17 @@
 # Overlook Hotel - Mod 2 Final Solo
 
-## Contributors:
+## Contributors
 
 * [Jordon Smith](https://github.com/jdxsmith): Owner and main contributor
 * [JP Carey](https://github.com/jaypeasee): Workflow buddy
 
-## Project Description:
+## Project Description
 
 This project's goal was to build a hotel webiste that allows customers and managers to log in and manage their bookings for the hotel.
 
 [Project Specs](https://frontend.turing.io/projects/overlook.html)
 
-## Programming Languages and Technology Used:
+## Programming Languages and Technology Used
 
 * `JavaScript` using `ES6` functions and classes
 * `HTML`
@@ -21,7 +21,7 @@ This project's goal was to build a hotel webiste that allows customers and manag
 * `Mocha` testing framework
 * `Chai` assertion library
 
-## Setup Instructions:
+## Setup Instructions
 
 1. Fork [this repository](https://github.com/jdxsmith/overlook)
 
@@ -43,11 +43,11 @@ This project's goal was to build a hotel webiste that allows customers and manag
    1. Username: manager
    2. Password: overlook2020
 
-## Working Application:
+## Working Application
 
 
 
-## Learning Goals:
+## Learning Goals
 
 1. Use the fetch API to retrieve and post data
 2. Create a robust testing suite
